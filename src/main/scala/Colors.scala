@@ -80,4 +80,7 @@ object Colors {
     val PURPLE_BACKGROUND_BRIGHT = "\u001b[0;105m"
     val CYAN_BACKGROUND_BRIGHT = "\u001b[0;106m"
     val WHITE_BACKGROUND_BRIGHT = "\u001b[0;107m"
+
+    def cprintln(color: String, text: String): Unit = println(color + text + RESET)
+    def cprint(color: String, text: String): Unit = print(color + text + RESET)
 }
