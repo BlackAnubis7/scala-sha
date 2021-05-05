@@ -1,5 +1,9 @@
+// ask:
+// - outscoping variables
+// - when use types
+
 object Appl {
-    def main(agrs: Array[String]): Unit = {
-        println("Hello!")
+    def main(args: Array[String]): Unit = {
+        FileChooser.choose()
     }
 }
