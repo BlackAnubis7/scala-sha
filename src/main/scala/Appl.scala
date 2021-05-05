@@ -12,6 +12,7 @@ import javax.swing.JFileChooser
 
 object Appl {
     def main(args: Array[String]): Unit = {
-        FileChooser.choose()
+        println(System.getProperty("user.dir") + "\\src\\test")
+        //FileChooser.choose()
     }
 }
