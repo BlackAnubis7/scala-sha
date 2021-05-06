@@ -26,32 +26,29 @@ class Looker() {
                     if(hashes contains hash.getFullHash) hashes(hash.getFullHash) += file.getAbsolutePath
                     else hashes += (hash.getFullHash -> mutable.HashSet(file.getAbsolutePath))
                 }
-                else tooLarge += FileMeta.getSizeString(file) + "\t" + file.getAbsolutePath
+                else tooLarge += FileMeta.getSizeString(file) + " \t" + file.getAbsolutePath
             }
         }
         for(key <- hashes.keys) {
             val agesorted: List[String] = hashes(key).toList.sortWith(FileMeta.olderThan)
+            print("   __________________________| ")
+            cprint(Colors.YELLOW_BOLD,"CHECKSUM")
+            println(" |__________________________")
+            println("--'----------------------------------------------------------------'--")
+            cprintln(Colors.WHITE, "   " + key)
+            println("----------------------------------------------------------------------")
+
             if (agesorted.size > 1) {
-                cprintln(Colors.BLACK, key)
-                // TODO: Colliding hash color
                 cprint(Colors.GREEN_BOLD, FileMeta.stringDate(agesorted.head))
-                // TODO: Oldest file modification date color
                 cprintln(Colors.GREEN_BOLD, "\t" + agesorted.head + "\t[OLDEST]")
-                // TODO: Oldest file path color
                 for (fname <- agesorted.tail) {
-                    cprint(Colors.BLACK, FileMeta.stringDate(fname))
-                    // TODO: File modification date color
-                    cprintln(Colors.BLACK_BOLD, "\t" + fname)
-                    // TODO: File path color
+                    cprint(Colors.CYAN, FileMeta.stringDate(fname))
+                    cprintln(Colors.CYAN_BOLD, "\t" + fname)
                 }
             }
             else if (agesorted.size == 1) {
-                cprintln(Colors.BLACK, key)
-                // TODO: Colliding hash color
                 cprint(Colors.GREEN_BOLD, FileMeta.stringDate(agesorted.head))
-                // TODO: Only file modification date color (or remove date at all, since no collision occurred)
                 cprintln(Colors.GREEN_BOLD, "\t" + agesorted.head + "\t[ONLY]")
-                // TODO: Only file path color
             }
             print("\n")
         }
@@ -59,12 +56,9 @@ class Looker() {
         if (tooLarge.nonEmpty) {
             cprintln(Colors.RED_BOLD,
                 "Files too large to process (limit is set to " + FileMeta.sizeToString(MAX_SIZE) + "):")
-            // TODO: "Files too large" title color
             tooLarge.foreach(path => cprintln(Colors.RED, "\t" + path))
-            // TODO: Files too large color
         }
         else cprintln(Colors.YELLOW, "No files too large to process (limit was set to " + FileMeta.sizeToString(MAX_SIZE) + ")")
-        // TODO: "No files too large" color
     }
 }
 
